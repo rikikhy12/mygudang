@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+    <defs>
+        <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#1e40af" />
+            <stop offset="50%" stop-color="#2563eb" />
+            <stop offset="100%" stop-color="#0284c7" />
+        </linearGradient>
+        <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#38bdf8" />
+            <stop offset="100%" stop-color="#3b82f6" />
+        </linearGradient>
+        <linearGradient id="darkGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#0f172a" />
+            <stop offset="100%" stop-color="#1e293b" />
+        </linearGradient>
+        <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#1e3a8a" flood-opacity="0.35" />
+        </filter>
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+    </defs>
+    
+    <!-- Outer Rounded Container Badge -->
+    <rect x="25" y="25" width="450" height="450" rx="90" fill="url(#primaryGrad)" filter="url(#dropShadow)"/>
+    
+    <!-- Inner Glossy Mesh Overlay -->
+    <rect x="25" y="25" width="450" height="450" rx="90" fill="none" stroke="rgba(255, 255, 255, 0.25)" stroke-width="4"/>
+    
+    <!-- Isometric 3D Cube / ERP Warehouse Box Symbol -->
+    <g transform="translate(250, 225)" filter="url(#glow)">
+        <!-- Top Isometric Face -->
+        <polygon points="0,-110 110,-50 0,10 -110,-50" fill="url(#accentGrad)" opacity="0.95"/>
+        
+        <!-- Left Isometric Face -->
+        <polygon points="-110,-50 0,10 0,130 -110,70" fill="#1d4ed8" opacity="0.9"/>
+        
+        <!-- Right Isometric Face -->
+        <polygon points="0,10 110,-50 110,70 0,130" fill="#0284c7" opacity="0.85"/>
+        
+        <!-- Inner Futuristic Core Grid Icon -->
+        <path d="M-40,-30 L0,-10 L40,-30 M0,-10 L0,50" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+        <circle cx="0" cy="-10" r="10" fill="#ffffff" />
+        <circle cx="-40" cy="-30" r="7" fill="#38bdf8" />
+        <circle cx="40" cy="-30" r="7" fill="#38bdf8" />
+        <circle cx="0" cy="50" r="7" fill="#38bdf8" />
+    </g>
+
+    <!-- Sleek ERP Sub-text Badge Base -->
+    <path d="M120 375 L380 375" stroke="rgba(255,255,255,0.3)" stroke-width="3" stroke-linecap="round"/>
+</svg>
