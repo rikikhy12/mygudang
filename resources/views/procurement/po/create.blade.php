@@ -139,7 +139,7 @@
                                         <input type="number" step="0.01" name="items[{{ $idx }}][quantity]" class="form-control form-control-solid form-control-sm qty-input text-center" value="{{ $pItem->quantity }}" min="0.01" required oninput="calcTotals()">
                                     </td>
                                     <td>
-                                        <input type="text" name="items[{{ $idx }}][koli]" class="form-control form-control-solid form-control-sm text-center" placeholder="e.g. 5 Koli">
+                                        <input type="text" name="items[{{ $idx }}][koli]" class="form-control form-control-solid form-control-sm text-center" value="{{ $pItem->koli ?? '' }}" placeholder="e.g. 2 Bal / 5 Koli">
                                     </td>
                                     <td>
                                         <input type="number" step="0.01" name="items[{{ $idx }}][unit_price]" class="form-control form-control-solid form-control-sm price-input text-end" value="{{ $pItem->estimated_unit_price }}" min="0" required oninput="calcTotals()">

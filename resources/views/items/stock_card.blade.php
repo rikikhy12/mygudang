@@ -34,7 +34,10 @@
                 <div class="bg-light-success border border-success border-dashed rounded px-6 py-3 text-end">
                     <div class="text-success fw-bold fs-7 text-uppercase">Saldo Stok Fisik Realtime</div>
                     <div class="text-success fw-bolder fs-2hx">
-                        {{ number_format($item->current_stock, 0) }} <span class="fs-5">{{ $item->unit->symbol }}</span>
+                        {{ number_format($item->current_stock, 2, ',', '.') }} <span class="fs-5">{{ $item->unit->symbol }}</span>
+                        @if(($item->current_koli ?? 0) > 0)
+                            <span class="badge badge-light-success fs-7 ms-2 align-middle">{{ number_format($item->current_koli, 0) }} Bal/Koli</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -78,22 +81,31 @@
                             <td>{{ $ledger->warehouse->name }}</td>
                             <td>
                                 @if($ledger->type == 'in')
-                                    <span class="text-success fw-bolder fs-6">+{{ number_format($ledger->quantity, 0) }}</span>
+                                    <div class="text-success fw-bolder fs-6">+{{ number_format($ledger->quantity, 2, ',', '.') }} {{ $item->unit->symbol }}</div>
+                                    @if($ledger->koli > 0)
+                                        <span class="badge badge-light-success fs-9 fw-bold">+{{ number_format($ledger->koli, 0) }} Bal/Koli</span>
+                                    @endif
                                 @else
                                     <span class="text-muted">-</span>
                                 @endif
                             </td>
                             <td>
                                 @if($ledger->type == 'out')
-                                    <span class="text-danger fw-bolder fs-6">-{{ number_format($ledger->quantity, 0) }}</span>
+                                    <div class="text-danger fw-bolder fs-6">-{{ number_format($ledger->quantity, 2, ',', '.') }} {{ $item->unit->symbol }}</div>
+                                    @if($ledger->koli > 0)
+                                        <span class="badge badge-light-danger fs-9 fw-bold">-{{ number_format($ledger->koli, 0) }} Bal/Koli</span>
+                                    @endif
                                 @else
                                     <span class="text-muted">-</span>
                                 @endif
                             </td>
                             <td>
-                                <span class="text-gray-900 fw-bolder fs-6">
-                                    {{ number_format($ledger->current_stock_after, 0) }} {{ $item->unit->symbol }}
-                                </span>
+                                <div class="text-gray-900 fw-bolder fs-6">
+                                    {{ number_format($ledger->current_stock_after, 2, ',', '.') }} {{ $item->unit->symbol }}
+                                </div>
+                                @if($ledger->current_koli_after > 0)
+                                    <span class="badge badge-light-primary fs-9 fw-bold">{{ number_format($ledger->current_koli_after, 0) }} Bal/Koli</span>
+                                @endif
                             </td>
                             <td>Rp {{ number_format($ledger->unit_cost, 0, ',', '.') }}</td>
                             <td class="text-muted fs-7">{{ $ledger->notes }}</td>

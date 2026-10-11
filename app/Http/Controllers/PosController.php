@@ -703,7 +703,8 @@ class PosController extends Controller
                             $qty,
                             $cost,
                             'Penjualan Kasir POS '.$invoice->invoice_number,
-                            date('Y-m-d')
+                            date('Y-m-d'),
+                            $itemData['koli'] ?? null
                         );
 
                         $cogsAccId = $item->getEffectiveCogsAccountId() ?: ($defaultCogsAcc ? $defaultCogsAcc->id : null);

@@ -76,22 +76,31 @@
                         <td>{{ $l->reference_no ?: '-' }}</td>
                         <td>
                             @if($l->type == 'in')
-                                <span class="text-success fw-bolder">+{{ number_format($l->quantity, 0) }}</span>
+                                <div class="text-success fw-bolder">+{{ number_format($l->quantity, 2, ',', '.') }} {{ $l->item->unit->symbol }}</div>
+                                @if($l->koli > 0)
+                                    <span class="badge badge-light-success fs-9 fw-bold">+{{ number_format($l->koli, 0) }} Bal/Koli</span>
+                                @endif
                             @else
                                 <span class="text-muted">-</span>
                             @endif
                         </td>
                         <td>
                             @if($l->type == 'out')
-                                <span class="text-danger fw-bolder">-{{ number_format($l->quantity, 0) }}</span>
+                                <div class="text-danger fw-bolder">-{{ number_format($l->quantity, 2, ',', '.') }} {{ $l->item->unit->symbol }}</div>
+                                @if($l->koli > 0)
+                                    <span class="badge badge-light-danger fs-9 fw-bold">-{{ number_format($l->koli, 0) }} Bal/Koli</span>
+                                @endif
                             @else
                                 <span class="text-muted">-</span>
                             @endif
                         </td>
                         <td>
-                            <span class="text-gray-900 fw-bolder">
-                                {{ number_format($l->current_stock_after, 0) }} {{ $l->item->unit->symbol }}
-                            </span>
+                            <div class="text-gray-900 fw-bolder">
+                                {{ number_format($l->current_stock_after, 2, ',', '.') }} {{ $l->item->unit->symbol }}
+                            </div>
+                            @if($l->current_koli_after > 0)
+                                <span class="badge badge-light-primary fs-9 fw-bold">{{ number_format($l->current_koli_after, 0) }} Bal/Koli</span>
+                            @endif
                         </td>
                         <td>Rp {{ number_format($l->unit_cost, 0, ',', '.') }}</td>
                         <td><span class="text-gray-900 fw-bolder">Rp {{ number_format($l->total_cost, 0, ',', '.') }}</span></td>

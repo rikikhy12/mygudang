@@ -13,6 +13,7 @@ class PurchaseRequisitionItem extends Model
         'purchase_requisition_id',
         'item_id',
         'quantity',
+        'koli',
         'estimated_unit_price',
         'estimated_total_price',
         'notes',

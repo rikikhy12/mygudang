@@ -76,11 +76,12 @@
                     <table class="table table-row-dashed table-row-gray-200 align-middle gs-4 gy-3 fs-7 mb-0 no-datatable" id="itemsTable">
                         <thead>
                             <tr class="fw-bold text-muted text-uppercase fs-8 bg-light text-nowrap">
-                                <th class="ps-4 py-3" style="min-width: 320px;">Barang / Produk</th>
-                                <th class="text-center" style="width: 140px;">Jumlah (Qty)</th>
-                                <th class="text-end" style="width: 220px;">Perkiraan Harga Satuan</th>
-                                <th class="text-end" style="width: 200px;">Subtotal</th>
-                                <th class="text-center pe-4" style="width: 70px;">Aksi</th>
+                                <th class="ps-4 py-3" style="min-width: 280px;">Barang / Produk</th>
+                                <th class="text-center" style="width: 130px;">Koli / Bal</th>
+                                <th class="text-center" style="width: 130px;">Jumlah Berat (Kg)</th>
+                                <th class="text-end" style="width: 200px;">Perkiraan Harga / Kg</th>
+                                <th class="text-end" style="width: 180px;">Subtotal</th>
+                                <th class="text-center pe-4" style="width: 60px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="itemsBody" class="fw-semibold text-gray-700">
@@ -107,6 +108,9 @@
                                         </div>
                                         <div class="autocomplete-dropdown position-absolute bg-white border rounded shadow-lg w-100 z-index-3 py-1 mt-1 d-none" style="max-height: 280px; overflow-y: auto; z-index: 1050; left: 0; top: 100%;"></div>
                                     </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="items[0][koli]" class="form-control form-control-solid form-control-sm text-center" placeholder="e.g. 2 Bal / 5 Koli">
                                 </td>
                                 <td>
                                     <input type="number" step="0.01" name="items[0][quantity]" class="form-control form-control-solid form-control-sm qty-input text-center" value="1" min="0.01" required oninput="calcPrTotals()">
@@ -446,6 +450,9 @@
                     </div>
                     <div class="autocomplete-dropdown position-absolute bg-white border rounded shadow-lg w-100 z-index-3 py-1 mt-1 d-none" style="max-height: 280px; overflow-y: auto; z-index: 1050; left: 0; top: 100%;"></div>
                 </div>
+            </td>
+            <td>
+                <input type="text" name="items[${rowIndex}][koli]" class="form-control form-control-solid form-control-sm text-center" placeholder="e.g. 2 Bal / 5 Koli">
             </td>
             <td>
                 <input type="number" step="0.01" name="items[${rowIndex}][quantity]" class="form-control form-control-solid form-control-sm qty-input text-center" value="1" min="0.01" required oninput="calcPrTotals()">

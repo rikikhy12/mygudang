@@ -18,18 +18,22 @@ class StockLedger extends Model
         'reference_no',
         'type', // in, out
         'quantity',
+        'koli',
         'unit_cost',
         'total_cost',
         'current_stock_after',
+        'current_koli_after',
         'notes',
     ];
 
     protected $casts = [
         'transaction_date' => 'date',
         'quantity' => 'decimal:2',
+        'koli' => 'decimal:2',
         'unit_cost' => 'decimal:2',
         'total_cost' => 'decimal:2',
         'current_stock_after' => 'decimal:2',
+        'current_koli_after' => 'decimal:2',
     ];
 
     public function item()

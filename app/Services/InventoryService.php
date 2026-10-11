@@ -24,7 +24,8 @@ class InventoryService
         float $quantity,
         float $unitCost,
         ?string $notes = null,
-        ?string $transactionDate = null
+        ?string $transactionDate = null,
+        float|string|null $koli = 0
     ): StockLedger {
         $transactionDate = $transactionDate ?: date('Y-m-d');
         $item = Item::findOrFail($itemId);
@@ -35,16 +36,31 @@ class InventoryService
         }
 
         return DB::transaction(function () use (
-            $item, $warehouseId, $referenceType, $referenceId, $referenceNo, $type, $quantity, $unitCost, $notes, $transactionDate
+            $item, $warehouseId, $referenceType, $referenceId, $referenceNo, $type, $quantity, $unitCost, $notes, $transactionDate, $koli
         ) {
-            $currentStock = $item->current_stock;
+            $currentStock = (float) $item->current_stock;
+            $currentKoli = (float) ($item->current_koli ?? 0);
+
             $quantity = abs($quantity);
             $totalCost = round($quantity * $unitCost, 2);
 
+            // Parse numeric koli amount (e.g. "2 Bal" => 2, 5 => 5)
+            $numericKoli = 0.0;
+            if (is_numeric($koli)) {
+                $numericKoli = (float) $koli;
+            } elseif (is_string($koli) && trim($koli) !== '') {
+                if (preg_match('/([0-9]+(?:\.[0-9]+)?)/', $koli, $matches)) {
+                    $numericKoli = (float) $matches[1];
+                }
+            }
+            $koliQty = abs($numericKoli);
+
             if ($type === 'in') {
                 $newStock = $currentStock + $quantity;
+                $newKoli = $currentKoli + $koliQty;
             } else {
                 $newStock = $currentStock - $quantity;
+                $newKoli = $currentKoli - $koliQty;
             }
 
             $ledger = StockLedger::create([
@@ -56,13 +72,18 @@ class InventoryService
                 'reference_no' => $referenceNo,
                 'type' => $type,
                 'quantity' => $quantity,
+                'koli' => $koliQty,
                 'unit_cost' => $unitCost,
                 'total_cost' => $totalCost,
                 'current_stock_after' => $newStock,
+                'current_koli_after' => $newKoli,
                 'notes' => $notes,
             ]);
 
-            $item->update(['current_stock' => $newStock]);
+            $item->update([
+                'current_stock' => $newStock,
+                'current_koli' => $newKoli,
+            ]);
 
             return $ledger;
         });

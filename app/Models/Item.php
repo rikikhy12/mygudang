@@ -28,6 +28,7 @@ class Item extends Model
         'min_margin_percent',
         'min_stock',
         'current_stock',
+        'current_koli',
         'is_active',
         'description',
     ];
@@ -39,6 +40,7 @@ class Item extends Model
         'min_margin_percent' => 'decimal:2',
         'min_stock' => 'decimal:2',
         'current_stock' => 'decimal:2',
+        'current_koli' => 'decimal:2',
         'is_active' => 'boolean',
     ];
 
@@ -286,6 +288,46 @@ class Item extends Model
         $out = (clone $query)->where('type', 'out')->sum('quantity');
 
         return (float) ($in - $out);
+    }
+
+    public function calculateKoliStock(?int $warehouseId = null): float
+    {
+        if (! $this->isPhysical()) {
+            return 0;
+        }
+
+        $query = $this->stockLedgers();
+        if ($warehouseId) {
+            $query->where('warehouse_id', $warehouseId);
+        }
+
+        $in = (clone $query)->where('type', 'in')->sum('koli');
+        $out = (clone $query)->where('type', 'out')->sum('koli');
+
+        return (float) ($in - $out);
+    }
+
+    /**
+     * Format catch weight / meat stock breakdown:
+     * e.g. "2 Bal (60.00 Kg)" or "1 Koli (25.00 Kg)"
+     */
+    public function getFormattedMeatStock(?float $kg = null, ?float $koli = null): string
+    {
+        $kg = $kg !== null ? (float) $kg : (float) $this->current_stock;
+        $koli = $koli !== null ? (float) $koli : (float) ($this->current_koli ?? 0);
+        $unitName = $this->unit ? ($this->unit->symbol ?: $this->unit->name) : 'Kg';
+
+        if (! $this->isPhysical() || $this->isService()) {
+            return '-';
+        }
+
+        if ($koli > 0) {
+            $koliStr = (fmod($koli, 1) === 0.0) ? number_format($koli, 0) : number_format($koli, 2);
+
+            return "{$koliStr} Bal/Koli (".number_format($kg, 2, ',', '.')." {$unitName})";
+        }
+
+        return number_format($kg, 2, ',', '.')." {$unitName}";
     }
 
     public function getImageUrlAttribute(): ?string

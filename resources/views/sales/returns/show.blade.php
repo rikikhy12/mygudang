@@ -110,8 +110,9 @@
                     <tr class="fw-bold text-muted text-uppercase fs-8 bg-light text-nowrap">
                         <th class="ps-4 py-3" style="width: 50px;">No.</th>
                         <th>Kode & Nama Barang</th>
-                        <th class="text-center" style="width: 140px;">Qty Retur</th>
-                        <th class="text-end" style="width: 180px;">Harga Satuan</th>
+                        <th class="text-center" style="width: 120px;">Koli / Bal</th>
+                        <th class="text-center" style="width: 140px;">Berat Retur (Kg)</th>
+                        <th class="text-end" style="width: 180px;">Harga Jual / Kg</th>
                         <th class="text-end" style="width: 180px;">Subtotal</th>
                         <th class="pe-4" style="min-width: 180px;">Alasan Retur</th>
                     </tr>
@@ -123,9 +124,10 @@
                         <td>
                             <strong class="text-gray-900">{{ $item->item->code }}</strong> - {{ $item->item->name }}
                         </td>
+                        <td class="text-center fw-bold text-primary">{{ $item->koli ?: '-' }}</td>
                         <td class="text-center">
                             <span class="badge badge-light-success fw-bold fs-7">
-                                {{ number_format($item->quantity, 2) }} {{ $item->unit->symbol ?? $item->item->unit->symbol ?? 'Pcs' }}
+                                {{ number_format($item->quantity, 2) }} {{ $item->unit->symbol ?? $item->item->unit->symbol ?? 'Kg' }}
                             </span>
                         </td>
                         <td class="text-end">Rp {{ number_format($item->unit_price, 0, ',', '.') }}</td>

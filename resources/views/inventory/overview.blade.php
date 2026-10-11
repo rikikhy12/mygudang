@@ -67,6 +67,7 @@
                     @php 
                         $item = $data['item'];
                         $stock = $data['stock'];
+                        $koliStock = $data['koli_stock'] ?? 0;
                         $val = $data['valuation'];
                     @endphp
                     <tr>
@@ -75,9 +76,17 @@
                         <td><span class="badge badge-light-primary fw-bold">{{ $item->category->name }}</span></td>
                         <td>{{ $item->unit->symbol }}</td>
                         <td>
-                            <span class="fw-bolder fs-6 {{ $stock <= $item->min_stock ? 'text-danger' : 'text-success' }}">
-                                {{ $item->getFormattedStockBreakdown($stock) }}
-                            </span>
+                            <div class="d-flex flex-column gap-1">
+                                <span class="fw-bolder fs-6 {{ $stock <= $item->min_stock ? 'text-danger' : 'text-success' }}">
+                                    @if($koliStock > 0)
+                                        <span class="badge badge-light-primary fw-bold fs-7 me-1">{{ number_format($koliStock, 0) }} Bal/Koli</span>
+                                    @endif
+                                    {{ number_format($stock, 2, ',', '.') }} {{ $item->unit->symbol }}
+                                </span>
+                                @if($item->unitConversions->count() > 0 && $koliStock <= 0)
+                                    <div class="text-muted fs-8">{{ $item->getFormattedStockBreakdown($stock) }}</div>
+                                @endif
+                            </div>
                         </td>
                         <td>{{ number_format($item->min_stock, 0) }}</td>
                         <td>Rp {{ number_format($item->purchase_price, 0, ',', '.') }}</td>

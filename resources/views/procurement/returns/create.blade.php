@@ -133,12 +133,13 @@
                     <table class="table table-row-dashed table-row-gray-200 align-middle gs-4 gy-3 fs-7 mb-0 no-datatable" id="itemsTable">
                         <thead>
                             <tr class="fw-bold text-muted text-uppercase fs-8 bg-light text-nowrap">
-                                <th class="ps-4 py-3" style="min-width: 260px;">Barang / Material</th>
-                                <th class="text-center" style="width: 140px;">Qty Retur</th>
-                                <th class="text-end" style="width: 180px;">Harga Satuan (Rp)</th>
-                                <th class="text-end" style="width: 180px;">Subtotal (Rp)</th>
-                                <th style="width: 200px;">Alasan Retur</th>
-                                <th class="text-center pe-4" style="width: 60px;">Aksi</th>
+                                <th class="ps-4 py-3" style="min-width: 240px;">Barang / Material</th>
+                                <th class="text-center" style="width: 120px;">Koli / Bal</th>
+                                <th class="text-center" style="width: 130px;">Berat Retur (Kg)</th>
+                                <th class="text-end" style="width: 170px;">Harga Satuan / Kg (Rp)</th>
+                                <th class="text-end" style="width: 170px;">Subtotal (Rp)</th>
+                                <th style="width: 180px;">Alasan Retur</th>
+                                <th class="text-center pe-4" style="width: 50px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="itemsTableBody" class="text-gray-700 fw-semibold">
@@ -148,7 +149,10 @@
                                     <td class="ps-4">
                                         <input type="hidden" name="items[{{ $idx }}][item_id]" value="{{ $invItem->item_id }}">
                                         <div class="fw-bold text-gray-900">{{ $invItem->item->code }} - {{ $invItem->item->name }}</div>
-                                        <span class="badge badge-light-secondary fs-9">Satuan: {{ $invItem->item->unit->name ?? 'Pcs' }}</span>
+                                        <span class="badge badge-light-secondary fs-9">Satuan: {{ $invItem->item->unit->name ?? 'Kg' }}</span>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="items[{{ $idx }}][koli]" class="form-control form-control-solid form-control-sm text-center" value="{{ $invItem->koli ?? '' }}" placeholder="e.g. 1 Bal">
                                     </td>
                                     <td>
                                         <input type="number" step="0.01" min="0" max="{{ $invItem->quantity }}" name="items[{{ $idx }}][quantity]" class="form-control form-control-solid form-control-sm text-center qty-calc" value="0" required oninput="calculateTotal()">
@@ -234,12 +238,15 @@
             <select name="items[INDEX][item_id]" class="form-select form-select-solid form-select-sm item-select" required onchange="handleItemSelect(this)">
                 <option value="">-- Pilih Barang --</option>
                 @foreach($items as $it)
-                    <option value="{{ $it->id }}" data-price="{{ $it->purchase_price }}" data-unit="{{ $it->unit->name ?? 'Pcs' }}">
+                    <option value="{{ $it->id }}" data-price="{{ $it->purchase_price }}" data-unit="{{ $it->unit->name ?? 'Kg' }}">
                         {{ $it->code }} - {{ $it->name }}
                     </option>
                 @endforeach
             </select>
             <span class="badge badge-light-secondary fs-9 unit-badge mt-1 d-none">Satuan: -</span>
+        </td>
+        <td>
+            <input type="text" name="items[INDEX][koli]" class="form-control form-control-solid form-control-sm text-center" placeholder="e.g. 1 Bal">
         </td>
         <td>
             <input type="number" step="0.01" min="0.01" name="items[INDEX][quantity]" class="form-control form-control-solid form-control-sm text-center qty-calc" value="1" required oninput="calculateTotal()">

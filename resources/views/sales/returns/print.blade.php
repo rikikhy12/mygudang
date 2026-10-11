@@ -56,11 +56,11 @@
             <tr class="fw-bold text-muted text-uppercase fs-8 bg-light text-nowrap">
                 <th class="text-center" style="width: 36px;">No</th>
                 <th class="text-left">Nama & Kode Barang yang Dikembalikan</th>
-                <th class="text-center" style="width: 80px;">Satuan</th>
-                <th class="text-center" style="width: 70px;">Qty</th>
-                <th class="text-right" style="width: 130px;">Harga Satuan</th>
-                <th class="text-right" style="width: 140px;">Subtotal (Rp)</th>
-                <th class="text-left" style="width: 160px;">Alasan Retur</th>
+                <th class="text-center" style="width: 70px;">Koli</th>
+                <th class="text-center" style="width: 70px;">Berat (Kg)</th>
+                <th class="text-right" style="width: 120px;">Harga Jual/Kg</th>
+                <th class="text-right" style="width: 130px;">Subtotal (Rp)</th>
+                <th class="text-left" style="width: 150px;">Alasan Retur</th>
             </tr>
         </thead>
         <tbody>
@@ -71,8 +71,8 @@
                     <div style="font-weight: 700; color: #0f172a;">{{ $item->item->name }}</div>
                     <div style="font-size: 11px; color: #64748b;">Kode: {{ $item->item->code }}</div>
                 </td>
-                <td class="text-center">{{ $item->unit->symbol ?? $item->item->unit->symbol ?? 'PCS' }}</td>
-                <td class="text-center font-bold" style="color: #16a34a;">{{ number_format($item->quantity, 2, ',', '.') }}</td>
+                <td class="text-center font-bold" style="color: #2563eb;">{{ $item->koli ?: '-' }}</td>
+                <td class="text-center font-bold" style="color: #16a34a;">{{ number_format($item->quantity, 2, ',', '.') }} {{ $item->unit->symbol ?? $item->item->unit->symbol ?? 'Kg' }}</td>
                 <td class="text-right">Rp {{ number_format($item->unit_price, 0, ',', '.') }}</td>
                 <td class="text-right font-bold">Rp {{ number_format($item->total_price, 0, ',', '.') }}</td>
                 <td style="font-size: 11px; color: #475569;">{{ $item->reason ?: '-' }}</td>

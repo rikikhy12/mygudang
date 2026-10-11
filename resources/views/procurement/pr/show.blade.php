@@ -97,9 +97,9 @@
                     <tr class="fw-bold text-muted text-uppercase fs-8 bg-light text-nowrap">
                         <th class="ps-3 py-3" style="width: 50px;">No.</th>
                         <th>Kode & Nama Barang</th>
-                        <th class="text-center">Satuan</th>
-                        <th class="text-center">Jumlah (Qty)</th>
-                        <th class="text-end">Estimasi Harga Satuan</th>
+                        <th class="text-center">Koli / Bal</th>
+                        <th class="text-center">Jumlah Berat (Kg)</th>
+                        <th class="text-end">Estimasi Harga / Kg</th>
                         <th class="text-end pe-3">Total Estimasi</th>
                     </tr>
                 </thead>
@@ -112,8 +112,8 @@
                         <td>
                             <strong class="text-gray-900">{{ $item->item->code }}</strong> - {{ $item->item->name }}
                         </td>
-                        <td class="text-center">{{ $item->item->unit->symbol }}</td>
-                        <td class="text-center fw-bold text-primary">{{ number_format($item->quantity, 0) }}</td>
+                        <td class="text-center fw-bold text-info">{{ $item->koli ?: '-' }}</td>
+                        <td class="text-center fw-bold text-primary">{{ number_format($item->quantity, 2, ',', '.') }} {{ $item->item->unit->symbol }}</td>
                         <td class="text-end">Rp {{ number_format($item->estimated_unit_price, 0, ',', '.') }}</td>
                         <td class="text-end pe-3 fw-bold text-gray-900">Rp {{ number_format($item->estimated_total_price, 0, ',', '.') }}</td>
                     </tr>

@@ -14,6 +14,7 @@ class PurchaseReturnItem extends Model
         'item_id',
         'unit_id',
         'quantity',
+        'koli',
         'unit_price',
         'total_price',
         'reason',

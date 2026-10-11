@@ -49,6 +49,7 @@ class ProcurementController extends Controller
             'items' => ['required', 'array', 'min:1'],
             'items.*.item_id' => ['required', 'exists:items,id'],
             'items.*.quantity' => ['required', 'numeric', 'min:0.01'],
+            'items.*.koli' => ['nullable', 'string', 'max:255'],
             'items.*.estimated_unit_price' => ['required', 'numeric', 'min:0'],
         ]);
 
@@ -69,6 +70,7 @@ class ProcurementController extends Controller
                 $pr->items()->create([
                     'item_id' => $itemData['item_id'],
                     'quantity' => $itemData['quantity'],
+                    'koli' => $itemData['koli'] ?? null,
                     'estimated_unit_price' => $itemData['estimated_unit_price'],
                     'estimated_total_price' => $itemData['quantity'] * $itemData['estimated_unit_price'],
                     'notes' => $itemData['notes'] ?? null,
@@ -349,14 +351,15 @@ class ProcurementController extends Controller
                         $receivedQty,
                         $unitCost,
                         'Penerimaan Barang PO '.$po->po_number,
-                        $request->receipt_date
+                        $request->receipt_date,
+                        $itemData['koli'] ?? ($poItem ? $poItem->koli : null)
                     );
 
                     // Update Item HPP with moving average
                     $item->update(['purchase_price' => round($avgCost, 2)]);
 
                     // Accounting Category GL Mapping
-                    $invAccount = $item->getEffectiveInventoryAccountId();
+                    $invAccount = $item->getEffectiveInventoryAccountId() ?: ChartOfAccount::where('code', '1201')->first()?->id;
                     if ($invAccount) {
                         $categoryDebits[$invAccount] = ($categoryDebits[$invAccount] ?? 0) + $totalCost;
                     }
@@ -536,7 +539,8 @@ class ProcurementController extends Controller
                         $qty,
                         $price,
                         'Pembelian Langsung Tagihan AP '.$invoice->invoice_number,
-                        $request->invoice_date
+                        $request->invoice_date,
+                        $itemData['koli'] ?? null
                     );
 
                     $item->update(['purchase_price' => round($avgCost, 2)]);
@@ -873,6 +877,7 @@ class ProcurementController extends Controller
                     'item_id' => $item->id,
                     'unit_id' => $item->unit_id,
                     'quantity' => $qty,
+                    'koli' => $itemData['koli'] ?? null,
                     'unit_price' => $price,
                     'total_price' => $lineTotal,
                     'reason' => $itemData['reason'] ?? null,
@@ -890,7 +895,8 @@ class ProcurementController extends Controller
                         $qty,
                         $price,
                         'Retur Pembelian '.$purchaseReturn->return_number.' ke Supplier',
-                        $request->return_date
+                        $request->return_date,
+                        $itemData['koli'] ?? null
                     );
                 }
 

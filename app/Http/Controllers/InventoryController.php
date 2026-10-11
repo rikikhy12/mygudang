@@ -32,11 +32,13 @@ class InventoryController extends Controller
 
         $stockData = $items->map(function ($item) use ($warehouseId) {
             $stock = $item->calculateStock($warehouseId);
+            $koliStock = $item->calculateKoliStock($warehouseId);
             $valuation = round($stock * $item->purchase_price, 2);
 
             return [
                 'item' => $item,
                 'stock' => $stock,
+                'koli_stock' => $koliStock,
                 'valuation' => $valuation,
             ];
         });

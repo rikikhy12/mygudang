@@ -272,11 +272,12 @@ class SalesController extends Controller
                         $deliveredQty,
                         $unitCost,
                         'Pengiriman Barang SO '.$so->so_number.' ke '.$so->customer->name,
-                        $request->delivery_date
+                        $request->delivery_date,
+                        $itemData['koli'] ?? ($soItem ? $soItem->koli : null)
                     );
 
-                    $cogsAcc = $item->getEffectiveCogsAccountId();
-                    $invAcc = $item->getEffectiveInventoryAccountId();
+                    $cogsAcc = $item->getEffectiveCogsAccountId() ?: (ChartOfAccount::where('code', '5001')->first()?->id ?: ChartOfAccount::where('code', '5101')->first()?->id);
+                    $invAcc = $item->getEffectiveInventoryAccountId() ?: ChartOfAccount::where('code', '1201')->first()?->id;
 
                     if ($cogsAcc && $invAcc && $totalCost > 0) {
                         $cogsCategoryJournals[] = [
@@ -521,7 +522,8 @@ class SalesController extends Controller
                             $qty,
                             $cost,
                             'Penjualan Langsung Faktur AR '.$invoice->invoice_number,
-                            $request->invoice_date
+                            $request->invoice_date,
+                            $itemData['koli'] ?? null
                         );
 
                         $cogsAccId = $item->getEffectiveCogsAccountId() ?: ($defaultCogsAcc ? $defaultCogsAcc->id : null);
@@ -911,6 +913,7 @@ class SalesController extends Controller
                     'item_id' => $item->id,
                     'unit_id' => $item->unit_id,
                     'quantity' => $qty,
+                    'koli' => $itemData['koli'] ?? null,
                     'unit_price' => $price,
                     'total_price' => $lineTotal,
                     'reason' => $itemData['reason'] ?? null,
@@ -928,7 +931,8 @@ class SalesController extends Controller
                         $qty,
                         $cost,
                         'Retur Penjualan '.$salesReturn->return_number.' dari Pelanggan',
-                        $request->return_date
+                        $request->return_date,
+                        $itemData['koli'] ?? null
                     );
                     $totalCogsRestock += ($qty * $cost);
                 }
