@@ -51,7 +51,12 @@
                     <div class="fs-8 fw-bold text-muted text-uppercase">Lokasi Masuk & Dokumen Induk</div>
                     <div class="fs-6 fw-bold text-gray-900 mt-1">{{ $grn->warehouse->name }}</div>
                     <div class="fs-7 text-muted mt-1">
-                        Referensi PO: <a href="{{ route('procurement.po.show', $grn->purchase_order_id) }}" class="text-primary fw-bold">{{ $grn->purchaseOrder->po_number }}</a>
+                        Referensi PO: 
+                        @if($grn->purchaseOrder)
+                            <a href="{{ route('procurement.po.show', $grn->purchase_order_id) }}" class="text-primary fw-bold">{{ $grn->purchaseOrder->po_number }}</a>
+                        @else
+                            <span class="badge badge-light-primary fw-semibold"><i class="bi bi-lightning-charge me-1"></i> Direct (Tanpa PO)</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -99,7 +104,7 @@
                         <td><code>{{ $item->item->code }}</code></td>
                         <td><strong class="text-gray-900">{{ $item->item->name }}</strong></td>
                         <td class="text-center text-success fw-bold">
-                            {{ number_format($item->quantity, 0) }} {{ $item->item->unit->symbol }}
+                            {{ (float)$item->quantity == (int)$item->quantity ? number_format($item->quantity, 0) : number_format($item->quantity, 2) }} {{ $item->item->unit->symbol }}
                         </td>
                         <td class="text-center fw-bold text-primary">{{ $item->koli ?: '-' }}</td>
                         <td class="text-end">Rp {{ number_format($item->unit_cost, 0, ',', '.') }}</td>

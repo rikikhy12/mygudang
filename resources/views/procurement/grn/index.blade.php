@@ -46,9 +46,13 @@
                             </a>
                         </td>
                         <td>
-                            <a href="{{ route('procurement.po.show', $grn->purchase_order_id) }}" class="text-primary fw-semibold">
-                                {{ $grn->purchaseOrder->po_number }}
-                            </a>
+                            @if($grn->purchaseOrder)
+                                <a href="{{ route('procurement.po.show', $grn->purchase_order_id) }}" class="text-primary fw-semibold">
+                                    {{ $grn->purchaseOrder->po_number }}
+                                </a>
+                            @else
+                                <span class="badge badge-light-primary fw-semibold"><i class="bi bi-lightning-charge me-1"></i> Direct (Tanpa PO)</span>
+                            @endif
                         </td>
                         <td><span class="text-gray-800 fw-semibold">{{ $grn->supplier->name }}</span></td>
                         <td>{{ $grn->warehouse->name }}</td>

@@ -258,39 +258,49 @@ class ProcurementController extends Controller
     public function grnCreate(Request $request)
     {
         $warehouses = Warehouse::where('is_active', true)->get();
+        $suppliers = Contact::suppliers()->where('is_active', true)->get();
+        $items = Item::with(['category', 'unit'])->where('is_active', true)->get();
         $openOrders = PurchaseOrder::with(['supplier', 'items.item'])
             ->whereIn('status', ['approved', 'partial_received'])
             ->get();
 
         $selectedPo = null;
-        if ($request->has('po_id')) {
+        if ($request->filled('po_id')) {
             $selectedPo = PurchaseOrder::with(['supplier', 'items.item.unit'])->find($request->po_id);
         }
 
-        return view('procurement.grn.create', compact('warehouses', 'openOrders', 'selectedPo'));
+        return view('procurement.grn.create', compact('warehouses', 'suppliers', 'items', 'openOrders', 'selectedPo'));
     }
 
     public function grnStore(Request $request, InventoryService $inventoryService, JournalService $journalService)
     {
         $request->validate([
-            'purchase_order_id' => ['required', 'exists:purchase_orders,id'],
+            'purchase_order_id' => ['nullable', 'exists:purchase_orders,id'],
+            'supplier_id' => ['required_without:purchase_order_id', 'nullable', 'exists:contacts,id'],
             'warehouse_id' => ['required', 'exists:warehouses,id'],
             'receipt_date' => ['required', 'date'],
             'delivery_note_number' => ['nullable', 'string'],
             'items' => ['required', 'array', 'min:1'],
             'items.*.item_id' => ['required', 'exists:items,id'],
             'items.*.quantity' => ['required', 'numeric', 'min:0.01'],
+            'items.*.koli' => ['nullable', 'string', 'max:255'],
+            'items.*.unit_cost' => ['nullable', 'numeric', 'min:0'],
         ]);
 
-        $po = PurchaseOrder::with('supplier')->findOrFail($request->purchase_order_id);
+        $po = $request->filled('purchase_order_id')
+            ? PurchaseOrder::with(['supplier', 'items'])->find($request->purchase_order_id)
+            : null;
 
-        DB::transaction(function () use ($request, $po, $inventoryService, $journalService) {
+        $supplierId = $po ? $po->supplier_id : $request->supplier_id;
+        $supplier = Contact::find($supplierId);
+
+        DB::transaction(function () use ($request, $po, $supplierId, $supplier, $inventoryService, $journalService) {
             $grnNumber = 'GRN-'.date('Ymd').'-'.str_pad(GoodsReceipt::count() + 1, 4, '0', STR_PAD_LEFT);
 
             $grn = GoodsReceipt::create([
                 'grn_number' => $grnNumber,
-                'purchase_order_id' => $po->id,
-                'supplier_id' => $po->supplier_id,
+                'purchase_order_id' => $po ? $po->id : null,
+                'supplier_id' => $supplierId,
                 'warehouse_id' => $request->warehouse_id,
                 'receipt_date' => $request->receipt_date,
                 'delivery_note_number' => $request->delivery_note_number,
@@ -304,25 +314,34 @@ class ProcurementController extends Controller
 
             foreach ($request->items as $itemData) {
                 $item = Item::with('category')->findOrFail($itemData['item_id']);
-                $poItem = PurchaseOrderItem::where('purchase_order_id', $po->id)
-                    ->where('item_id', $item->id)
-                    ->first();
+                $poItem = null;
+                if ($po) {
+                    $poItem = PurchaseOrderItem::where('purchase_order_id', $po->id)
+                        ->where('item_id', $item->id)
+                        ->first();
+                }
 
-                $unitCost = $poItem ? $poItem->unit_price : $item->purchase_price;
+                $unitCost = $poItem
+                    ? (float) $poItem->unit_price
+                    : (isset($itemData['unit_cost']) && (float) $itemData['unit_cost'] > 0
+                        ? (float) $itemData['unit_cost']
+                        : (float) $item->purchase_price);
+
                 $receivedQty = (float) $itemData['quantity'];
                 $totalCost = round($receivedQty * $unitCost, 2);
+                $koli = $itemData['koli'] ?? ($poItem ? $poItem->koli : null);
 
                 GoodsReceiptItem::create([
                     'goods_receipt_id' => $grn->id,
                     'purchase_order_item_id' => $poItem ? $poItem->id : null,
                     'item_id' => $item->id,
                     'quantity' => $receivedQty,
-                    'koli' => $itemData['koli'] ?? ($poItem ? $poItem->koli : null),
+                    'koli' => $koli,
                     'unit_cost' => $unitCost,
                     'total_cost' => $totalCost,
                 ]);
 
-                // Update PO received quantity
+                // Update PO received quantity if from PO
                 if ($poItem) {
                     $poItem->increment('received_quantity', $receivedQty);
                 }
@@ -341,6 +360,10 @@ class ProcurementController extends Controller
                         $avgCost = (($oldStock * $oldCost) + ($newQty * $newCost)) / ($oldStock + $newQty);
                     }
 
+                    $movementNotes = $po
+                        ? 'Penerimaan Barang PO '.$po->po_number
+                        : 'Penerimaan Barang Langsung (Direct GRN)';
+
                     $inventoryService->recordStockMovement(
                         $item->id,
                         $request->warehouse_id,
@@ -350,13 +373,15 @@ class ProcurementController extends Controller
                         'in',
                         $receivedQty,
                         $unitCost,
-                        'Penerimaan Barang PO '.$po->po_number,
+                        $movementNotes,
                         $request->receipt_date,
-                        $itemData['koli'] ?? ($poItem ? $poItem->koli : null)
+                        $koli
                     );
 
                     // Update Item HPP with moving average
-                    $item->update(['purchase_price' => round($avgCost, 2)]);
+                    if ($avgCost > 0) {
+                        $item->update(['purchase_price' => round($avgCost, 2)]);
+                    }
 
                     // Accounting Category GL Mapping
                     $invAccount = $item->getEffectiveInventoryAccountId() ?: ChartOfAccount::where('code', '1201')->first()?->id;
@@ -367,15 +392,17 @@ class ProcurementController extends Controller
                 }
             }
 
-            // Check if PO is completely received
-            $allReceived = true;
-            foreach ($po->items as $pItem) {
-                if ($pItem->received_quantity < $pItem->quantity) {
-                    $allReceived = false;
-                    break;
+            // Check if PO is completely received (only if from PO)
+            if ($po) {
+                $allReceived = true;
+                foreach ($po->items as $pItem) {
+                    if ($pItem->received_quantity < $pItem->quantity) {
+                        $allReceived = false;
+                        break;
+                    }
                 }
+                $po->update(['status' => $allReceived ? 'received' : 'partial_received']);
             }
-            $po->update(['status' => $allReceived ? 'received' : 'partial_received']);
 
             // Auto-Journal: Debit Inventory Accounts vs Credit Unbilled GRN (1301)
             if ($totalReceivedCost > 0) {
@@ -398,11 +425,13 @@ class ProcurementController extends Controller
                     'memo' => 'Penerimaan Barang Belum Ditagih (Unbilled GRN) '.$grn->grn_number,
                 ];
 
+                $journalMemo = 'Jurnal Penerimaan Barang '.$grn->grn_number.' dari '.($supplier ? $supplier->name : ($po ? $po->supplier->name : 'Supplier'));
+
                 $journal = $journalService->createJournal(
                     'GRN',
                     $grn->id,
                     $grn->grn_number,
-                    'Jurnal Penerimaan Barang '.$grn->grn_number.' dari '.$po->supplier->name,
+                    $journalMemo,
                     $journalEntries,
                     $request->receipt_date,
                     auth()->id()
