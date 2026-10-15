@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login Toko Daging | MYGUDANG MEAT ERP</title>
+    <title>Login Penjualan Daging & POS | MYGUDANG MEAT</title>
     
     <!-- Brand Favicon & Logo -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='meatGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23E11D48'/%3E%3Cstop offset='50%25' stop-color='%23BE123C'/%3E%3Cstop offset='100%25' stop-color='%23881337'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='28' fill='%23FFFFFF' stroke='%23E2E8F0' stroke-width='4'/%3E%3Ccircle cx='64' cy='64' r='46' fill='none' stroke='url(%23meatGrad)' stroke-width='6' stroke-dasharray='6 4'/%3E%3Cpath d='M44 76C40 68 40 56 48 46C56 36 68 36 78 42C88 48 92 60 88 70C84 80 72 86 60 84C52 82 46 80 44 76Z' fill='url(%23meatGrad)'/%3E%3Ccircle cx='62' cy='58' r='10' fill='%23FFFFFF' opacity='0.9'/%3E%3Ccircle cx='62' cy='58' r='6' fill='%23E2E8F0'/%3E%3Cpath d='M74 46C70 42 62 42 58 45' stroke='%23FFE4E6' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" href="{{ asset('assets/media/logos/Logosg.png') }}">
     
     <!-- GT Walsheim Pro Font Stylesheet -->
     <link href="{{ asset('assets/fonts/stylesheet.css') }}" rel="stylesheet" type="text/css" />
@@ -27,11 +27,10 @@
             --meat-crimson-light: #FFF1F2;
             --meat-crimson-border: #FECDD3;
             --text-heading: #0F172A;
-            --text-body: #334155;
-            --text-muted: #64748B;
-            --border-light: #E2E8F0;
-            --bg-page: #FFFFFF;
-            --bg-card: #FFFFFF;
+            --text-body: #1E293B;
+            --text-muted: #475569;
+            --border-card: #E2E8F0;
+            --bg-page: #F8FAFC;
         }
 
         * {
@@ -43,7 +42,7 @@
         html, body {
             height: 100%;
             font-family: var(--font-main) !important;
-            background-color: #FFFFFF;
+            background-color: var(--bg-page);
             color: var(--text-body);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -57,22 +56,22 @@
         }
 
         /* ========================================================
-           LEFT HERO PANEL - BRIGHT & CLEAN WHITE THEME
+           LEFT HERO PANEL - BUTCHERY & POS SHOWCASE
+           High Opacity White Backdrop for 100% Readability
         ======================================================== */
         .hero-panel {
-            flex: 0 0 48%;
+            flex: 0 0 50%;
             background: 
-                linear-gradient(135deg, #FFFFFF 0%, #FFF5F7 45%, #FEE2E2 100%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 248, 250, 0.92) 50%, rgba(254, 238, 242, 0.95) 100%),
                 url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
-            background-blend-mode: overlay;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 4rem 4rem 3rem 4rem;
+            padding: 3.5rem 3.5rem 2.5rem 3.5rem;
             color: var(--text-heading);
             overflow: hidden;
-            border-right: 1px solid #F1F5F9;
+            border-right: 1px solid #E2E8F0;
         }
 
         .hero-panel::before {
@@ -84,7 +83,7 @@
             bottom: 0;
             background: 
                 radial-gradient(circle at 10% 15%, rgba(225, 29, 72, 0.08) 0%, transparent 55%),
-                radial-gradient(circle at 90% 85%, rgba(244, 63, 94, 0.06) 0%, transparent 50%);
+                radial-gradient(circle at 90% 85%, rgba(244, 63, 94, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -99,24 +98,24 @@
             align-items: center;
             gap: 0.5rem;
             background: #FFF1F2;
-            border: 1px solid #FECDD3;
-            padding: 0.45rem 1.1rem;
+            border: 1.5px solid #FECDD3;
+            padding: 0.45rem 1.15rem;
             border-radius: 9999px;
             font-size: 0.78rem;
             font-weight: 700;
             letter-spacing: 0.06em;
             text-transform: uppercase;
             color: #BE123C;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.08);
+            margin-bottom: 1.25rem;
+            box-shadow: 0 2px 10px rgba(225, 29, 72, 0.08);
         }
 
         .hero-title {
-            font-size: 2.65rem;
+            font-size: 2.5rem;
             font-weight: 800;
             line-height: 1.16;
             letter-spacing: -0.025em;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.75rem;
             color: var(--text-heading) !important;
         }
 
@@ -126,41 +125,38 @@
         }
 
         .hero-subtitle {
-            font-size: 1.02rem;
-            font-weight: 450;
-            color: var(--text-body) !important;
-            line-height: 1.6;
-            margin-bottom: 2.25rem;
-            max-width: 520px;
+            font-size: 0.98rem;
+            font-weight: 500;
+            color: var(--text-muted) !important;
+            line-height: 1.55;
+            margin-bottom: 1.75rem;
+            max-width: 540px;
         }
 
-        /* 4 Clean Light Feature Cards */
+        /* 4 Clean Solid White Feature Cards */
         .glass-features-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 0.85rem;
-            margin-bottom: 2rem;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
         }
 
         .glass-feature-card {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(226, 232, 240, 0.9);
+            background: #FFFFFF;
+            border: 1.5px solid #E2E8F0;
             border-radius: 16px;
-            padding: 0.95rem 1.25rem;
+            padding: 0.9rem 1.25rem;
             display: flex;
             align-items: center;
             gap: 1.1rem;
             transition: all 0.25s ease;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
         }
 
         .glass-feature-card:hover {
-            background: #FFFFFF;
             border-color: #FECDD3;
-            transform: translateX(6px);
-            box-shadow: 0 8px 24px rgba(225, 29, 72, 0.08);
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(225, 29, 72, 0.08);
         }
 
         .feature-icon-box {
@@ -168,7 +164,7 @@
             height: 44px;
             border-radius: 13px;
             background: #FFF1F2;
-            border: 1px solid #FECDD3;
+            border: 1.5px solid #FECDD3;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -183,7 +179,7 @@
         }
 
         .feature-title {
-            font-size: 0.95rem;
+            font-size: 0.94rem;
             font-weight: 700;
             color: var(--text-heading);
             letter-spacing: -0.01em;
@@ -191,22 +187,23 @@
         }
 
         .feature-desc {
-            font-size: 0.82rem;
+            font-size: 0.81rem;
             color: var(--text-muted);
             line-height: 1.35;
+            font-weight: 450;
         }
 
         /* Status Strip */
         .status-strip {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1rem;
+            gap: 0.65rem;
+            margin-top: 0.5rem;
         }
 
         .status-indicator-chip {
             background: #FFFFFF;
-            border: 1px solid var(--border-light);
+            border: 1.5px solid #E2E8F0;
             border-radius: 10px;
             padding: 0.4rem 0.85rem;
             display: flex;
@@ -238,16 +235,17 @@
             align-items: center;
             justify-content: space-between;
             background: #FFFFFF;
-            border: 1px solid var(--border-light);
+            border: 1.5px solid #E2E8F0;
             border-radius: 14px;
-            padding: 0.85rem 1.4rem;
+            padding: 0.8rem 1.35rem;
             position: relative;
             z-index: 2;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+            margin-top: 1rem;
         }
 
         .live-clock-time {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 800;
             letter-spacing: 0.04em;
             color: var(--text-heading) !important;
@@ -255,58 +253,64 @@
         }
 
         .live-clock-date {
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             font-weight: 500;
             color: var(--text-muted) !important;
         }
 
         /* ========================================================
-           RIGHT FORM PANEL - PURE WHITE & LUXURY CARD
+           RIGHT FORM PANEL - CRISP & DISTINCT WHITE CARD
         ======================================================== */
         .form-panel {
-            flex: 1;
+            flex: 0 0 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #FAFAFC;
+            background: #F4F6F9;
+            background-image: 
+                radial-gradient(at 100% 0%, rgba(225, 29, 72, 0.04) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(59, 130, 246, 0.03) 0px, transparent 50%);
             padding: 3rem 2.5rem;
             position: relative;
         }
 
         .login-card-elevated {
             width: 100%;
-            max-width: 450px;
+            max-width: 440px;
             background: #FFFFFF;
-            border: 1px solid #E2E8F0;
+            border: 1.5px solid #E2E8F0;
             border-radius: 26px;
-            padding: 3.25rem 2.65rem 2.5rem 2.65rem;
-            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.02);
+            padding: 3.25rem 2.5rem 2.5rem 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(226, 232, 240, 0.8);
             position: relative;
             margin: auto;
         }
 
-        .floating-meat-badge {
-            width: 82px;
-            height: 82px;
+        /* Floating Logo Badge with Original Rizal Store Logo */
+        .floating-logo-badge {
+            width: 88px;
+            height: 88px;
             border-radius: 24px;
             background: #FFFFFF;
-            border: 2px solid #FECDD3;
-            box-shadow: 0 10px 25px rgba(225, 29, 72, 0.12);
+            border: 2px solid #E2E8F0;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: -5.7rem auto 1.5rem auto;
+            margin: -5.9rem auto 1.5rem auto;
             position: relative;
             z-index: 10;
+            padding: 8px;
         }
 
-        .floating-meat-badge i {
-            font-size: 2.2rem;
-            color: var(--meat-crimson);
+        .floating-logo-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .form-header-title {
-            font-size: 1.68rem;
+            font-size: 1.65rem;
             font-weight: 800;
             color: var(--text-heading);
             text-align: center;
@@ -318,8 +322,9 @@
             font-size: 0.88rem;
             color: var(--text-muted);
             text-align: center;
-            margin-bottom: 2.1rem;
+            margin-bottom: 2rem;
             line-height: 1.45;
+            font-weight: 450;
         }
 
         .custom-input-label {
@@ -340,7 +345,7 @@
             left: 1.15rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #94A3B8;
+            color: #64748B;
             font-size: 1.15rem;
             pointer-events: none;
             transition: color 0.2s;
@@ -351,7 +356,7 @@
             right: 1.15rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #94A3B8;
+            color: #64748B;
             font-size: 1.2rem;
             cursor: pointer;
             background: none;
@@ -371,8 +376,8 @@
             width: 100%;
             height: 52px;
             padding: 0.65rem 1rem 0.65rem 3.1rem;
-            background: #F8FAFC;
-            border: 1.5px solid #E2E8F0;
+            background: #FFFFFF;
+            border: 1.5px solid #CBD5E1;
             border-radius: 14px;
             font-size: 0.94rem;
             color: var(--text-heading);
@@ -407,7 +412,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.65rem;
-            box-shadow: 0 10px 24px -5px rgba(225, 29, 72, 0.4);
+            box-shadow: 0 10px 24px -5px rgba(225, 29, 72, 0.45);
             transition: all 0.25s ease;
             cursor: pointer;
             margin-top: 1rem;
@@ -415,7 +420,7 @@
 
         .btn-submit-meat:hover {
             background: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%);
-            box-shadow: 0 14px 28px -5px rgba(225, 29, 72, 0.55);
+            box-shadow: 0 14px 28px -5px rgba(225, 29, 72, 0.6);
             transform: translateY(-2px);
             color: #FFFFFF;
         }
@@ -427,7 +432,7 @@
         .demo-accounts-wrapper {
             margin-top: 1.85rem;
             padding-top: 1.35rem;
-            border-top: 1px dashed #E2E8F0;
+            border-top: 1px dashed #CBD5E1;
             text-align: center;
         }
 
@@ -437,7 +442,7 @@
             font-family: var(--font-main);
             padding: 0.45rem 0.75rem;
             border-radius: 10px;
-            border: 1px solid #E2E8F0;
+            border: 1.5px solid #E2E8F0;
             background: #F8FAFC;
             color: var(--text-body);
             cursor: pointer;
@@ -456,6 +461,7 @@
             font-size: 0.74rem;
             color: var(--text-muted);
             margin-top: 1.6rem;
+            font-weight: 500;
         }
 
         @media (max-width: 991.98px) {
@@ -466,9 +472,10 @@
                 flex: none;
                 padding: 3rem 2rem;
                 border-right: none;
-                border-bottom: 1px solid #F1F5F9;
+                border-bottom: 1px solid #E2E8F0;
             }
             .form-panel {
+                flex: none;
                 padding: 4rem 1.25rem 2.5rem 1.25rem;
             }
             .login-card-elevated {
@@ -481,51 +488,42 @@
 <body>
     <div class="login-wrapper">
         <!-- ========================================================
-             LEFT HERO PANEL - BRIGHT WHITE THEME WITH BUTCHERY ACCENTS
+             LEFT HERO PANEL - BUTCHERY & POS SHOWCASE
+             High-Opacity White Layer for 100% Crisp Readability
         ======================================================== -->
         <div class="hero-panel">
             <div class="hero-main-content">
                 <div class="badge-meat-pill">
-                    <i class="bi bi-fire text-danger"></i>
-                    <span>Sistem Industri Toko Daging & Cold Storage</span>
+                    <i class="bi bi-cart-check-fill text-danger"></i>
+                    <span>Sistem Penjualan Daging & Kasir POS Terpadu</span>
                 </div>
 
                 <h1 class="hero-title">
-                    MYGUDANG <span>MEAT ERP</span>
+                    MYGUDANG <span>MEAT & POS</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Solusi terpadu pengadaan karkas, butchery deboning, dual-unit timbangan Koli & Kg (Catch Weight), gudang dingin chiller & kasir toko daging.
+                    Platform terpadu kasir toko daging (Point of Sale), timbangan berat riil Kg & Koli kemasan (Catch Weight), penerimaan barang direct tanpa PO, serta kontrol stok karkas chiller.
                 </p>
 
-                <!-- 4 Clean Light Butchery Features -->
+                <!-- 4 Crisp White Feature Cards with Meat & POS Highlights -->
                 <div class="glass-features-grid">
+                    <div class="glass-feature-card">
+                        <div class="feature-icon-box">
+                            <i class="bi bi-shop"></i>
+                        </div>
+                        <div class="feature-info">
+                            <span class="feature-title">Kasir POS Toko Daging (Point of Sale)</span>
+                            <span class="feature-desc">Transaksi kasir retail & grosir cepat, scan barcode potongan, timbangan Kg digital, multi-pembayaran & struk nota thermal.</span>
+                        </div>
+                    </div>
+
                     <div class="glass-feature-card">
                         <div class="feature-icon-box">
                             <i class="bi bi-box-seam"></i>
                         </div>
                         <div class="feature-info">
-                            <span class="feature-title">Dual-Unit Stock (Catch Weight Engine)</span>
-                            <span class="feature-desc">Presisi timbangan kilogram (Kg) riil & kemasan fisik (Koli/Bal) di setiap mutasi stok.</span>
-                        </div>
-                    </div>
-
-                    <div class="glass-feature-card">
-                        <div class="feature-icon-box">
-                            <i class="bi bi-snow2"></i>
-                        </div>
-                        <div class="feature-info">
-                            <span class="feature-title">Cold Storage & Lot Traceability</span>
-                            <span class="feature-desc">Kontrol suhu pendingin, nomor batch karkas, tanggal potong & mutasi multi-gudang.</span>
-                        </div>
-                    </div>
-
-                    <div class="glass-feature-card">
-                        <div class="feature-icon-box">
-                            <i class="bi bi-scissors"></i>
-                        </div>
-                        <div class="feature-info">
-                            <span class="feature-title">Butchery, Deboning & Yield Formula</span>
-                            <span class="feature-desc">Konversi karkas ke potongan primal (Sirloin, Tenderloin, Ribeye) & kalkulasi HPP otomatis.</span>
+                            <span class="feature-title">Dual-Unit (Catch Weight Koli & Kg)</span>
+                            <span class="feature-desc">Presisi timbangan kilogram (Kg) riil & kuantitas kemasan (Koli/Bal/Dus) di setiap penjualan, mutasi stok, dan retur.</span>
                         </div>
                     </div>
 
@@ -534,8 +532,18 @@
                             <i class="bi bi-lightning-charge-fill"></i>
                         </div>
                         <div class="feature-info">
-                            <span class="feature-title">Bypass Direct GRN & Kasir POS Daging</span>
-                            <span class="feature-desc">Penerimaan barang cepat tanpa PO, integrasi kasir retail & pembukuan jurnal akuntansi.</span>
+                            <span class="feature-title">Bypass Penerimaan Barang (Direct GRN Tanpa PO)</span>
+                            <span class="feature-desc">Terima pasokan karkas/daging langsung dari supplier atau RPH tanpa perlu PO, stok otomatis bertambah & terjurnal.</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-feature-card">
+                        <div class="feature-icon-box">
+                            <i class="bi bi-snow2"></i>
+                        </div>
+                        <div class="feature-info">
+                            <span class="feature-title">Butchery, Yield Karkas & Chiller Storage</span>
+                            <span class="feature-desc">Formula deboning karkas ke potongan primal (Sirloin, Tenderloin, Ribeye, Wagyu, Tetelan) & pelacakan lot cold storage.</span>
                         </div>
                     </div>
                 </div>
@@ -544,15 +552,15 @@
                 <div class="status-strip">
                     <div class="status-indicator-chip">
                         <span class="status-dot-pulse"></span>
-                        <span>Chiller Room: -2°C ~ 2°C (Optimal)</span>
+                        <span>Kasir POS: Ready</span>
                     </div>
                     <div class="status-indicator-chip">
                         <i class="bi bi-shield-check text-success"></i>
-                        <span>Dual-Unit Balance: Active</span>
+                        <span>Dual-Unit (Koli + Kg): Active</span>
                     </div>
                     <div class="status-indicator-chip">
-                        <i class="bi bi-database-check text-primary"></i>
-                        <span>Auto-Journal GL: Synced</span>
+                        <i class="bi bi-thermometer-half text-info"></i>
+                        <span>Chiller Room: -2°C ~ 2°C Optimal</span>
                     </div>
                 </div>
             </div>
@@ -565,24 +573,24 @@
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-bold fs-8 border border-danger border-opacity-25">
-                        <i class="bi bi-dot"></i> LIVE CLOUD
+                        <i class="bi bi-dot"></i> SISTEM AKTIF
                     </span>
                 </div>
             </div>
         </div>
 
         <!-- ========================================================
-             RIGHT FORM PANEL - PURE WHITE FORM
+             RIGHT FORM PANEL - PURE WHITE CARD & HIGH CONTRAST
         ======================================================== -->
         <div class="form-panel">
             <div class="login-card-elevated">
-                <!-- Floating Butchery Logo Emblem -->
-                <div class="floating-meat-badge">
-                    <i class="bi bi-shop"></i>
+                <!-- Floating Logo Badge with Original Logo Image -->
+                <div class="floating-logo-badge">
+                    <img src="{{ asset('assets/media/logos/Logosg.png') }}" alt="Logo Rizal Store">
                 </div>
 
                 <h2 class="form-header-title">Masuk ke Sistem</h2>
-                <p class="form-header-subtitle">Silakan masuk ke akun Toko Daging & ERP Anda</p>
+                <p class="form-header-subtitle">Silakan autentikasi akun Penjualan Daging & POS Anda</p>
 
                 @if($errors->any())
                     <div class="alert alert-dismissible bg-danger bg-opacity-10 d-flex align-items-center p-3 mb-4 rounded-3 border border-danger border-opacity-25">
@@ -623,7 +631,7 @@
                     </div>
 
                     <button type="submit" class="btn-submit-meat">
-                        <span>Masuk ke Dashboard Daging</span>
+                        <span>Masuk ke Kasir & Sistem Daging</span>
                         <i class="bi bi-arrow-right fs-5"></i>
                     </button>
                 </form>
@@ -631,14 +639,14 @@
                 <div class="demo-accounts-wrapper">
                     <div class="fs-9 text-muted fw-bold text-uppercase mb-2 letter-spacing-1">Akses Akun Cepat (Quick Demo)</div>
                     <div class="d-flex flex-wrap gap-1.5 justify-content-center">
+                        <button type="button" class="demo-chip" onclick="fillLogin('sales@erp.local')">
+                            <i class="bi bi-shop text-danger me-1"></i> Kasir POS Toko
+                        </button>
                         <button type="button" class="demo-chip" onclick="fillLogin('admin@erp.local')">
-                            <i class="bi bi-shield-lock text-danger me-1"></i> Admin Utama
+                            <i class="bi bi-shield-lock text-primary me-1"></i> Admin Utama
                         </button>
                         <button type="button" class="demo-chip" onclick="fillLogin('purchasing@erp.local')">
                             <i class="bi bi-box-arrow-in-down text-warning me-1"></i> Butchery & Gudang
-                        </button>
-                        <button type="button" class="demo-chip" onclick="fillLogin('sales@erp.local')">
-                            <i class="bi bi-bag-check text-info me-1"></i> Kasir Toko
                         </button>
                         <button type="button" class="demo-chip" onclick="fillLogin('finance@erp.local')">
                             <i class="bi bi-wallet2 text-success me-1"></i> Keuangan (AP/AR)
@@ -647,7 +655,7 @@
                 </div>
 
                 <div class="footer-system-note">
-                    MYGUDANG MEAT ERP &bull; Dual-Unit Catch Weight v2.4
+                    MYGUDANG MEAT & POS ERP &bull; Dual-Unit Catch Weight v2.4
                 </div>
             </div>
         </div>
