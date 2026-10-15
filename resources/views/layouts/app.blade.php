@@ -7,7 +7,8 @@
     <!-- Brand Favicon & Logo -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='bgGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230B132B'/%3E%3Cstop offset='100%25' stop-color='%23111C38'/%3E%3C/linearGradient%3E%3ClinearGradient id='blueGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231D4ED8'/%3E%3Cstop offset='60%25' stop-color='%232563EB'/%3E%3Cstop offset='100%25' stop-color='%2338BDF8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='28' fill='url(%23bgGrad)' stroke='%2338BDF8' stroke-width='4' stroke-opacity='0.4'/%3E%3Cg transform='translate(6, 6)'%3E%3Cpath d='M14 84V26C14 20 19 16 26 19L48 38L70 19C77 16 82 20 82 26V52' fill='none' stroke='url(%23blueGrad)' stroke-width='14' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M108 34a34 34 0 0 0-24-11 38 38 0 0 0-38 38v0a38 38 0 0 0 38 38 36 36 0 0 0 27-12' fill='none' stroke='%23FFFFFF' stroke-width='13' stroke-linecap='round'/%3E%3Cpath d='M78 50L68 60L78 70' stroke='%2338BDF8' stroke-width='5.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M83 72L92 48' stroke='%2338BDF8' stroke-width='5.5' stroke-linecap='round'/%3E%3Cpath d='M97 50L107 60L97 70' stroke='%2338BDF8' stroke-width='5.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='110' y='14' width='12' height='12' rx='3' fill='%2338BDF8'/%3E%3Crect x='124' y='14' width='12' height='12' rx='3' fill='%232563EB'/%3E%3Crect x='117' y='28' width='14' height='14' rx='3.5' fill='%2360A5FA'/%3E%3C/g%3E%3C/svg%3E">
     
-    <!-- Google Fonts: Inter & Outfit -->
+    <!-- Font Family: GT Walsheim Pro & Fallbacks -->
+    <link href="{{ asset('assets/fonts/stylesheet.css') }}" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -22,8 +23,8 @@
 
     <style>
         :root {
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --font-heading: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-sans: 'GT Walsheim Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-heading: 'GT Walsheim Pro', 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --sidebar-width: 285px;
             --header-height: 72px;
             --sidebar-bg: #0d1117;

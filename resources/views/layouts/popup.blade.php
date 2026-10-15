@@ -16,12 +16,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
 
+    <!-- Font Family: GT Walsheim Pro -->
+    <link href="{{ asset('assets/fonts/stylesheet.css') }}" rel="stylesheet" type="text/css" />
+
     <!-- Metronic Global Custom CSS -->
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 
     <style>
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'GT Walsheim Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 14.5px;
             background-color: #f4f6f9;
             color: #1e293b;
@@ -29,7 +32,7 @@
             -webkit-font-smoothing: antialiased;
         }
         h1, h2, h3, h4, h5, h6, .fw-bolder, .fw-bold, .card-title {
-            font-family: 'Outfit', 'Inter', sans-serif !important;
+            font-family: 'GT Walsheim Pro', 'Outfit', 'Inter', sans-serif !important;
         }
         .card {
             border: 1px solid #e2e8f0 !important;
