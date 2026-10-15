@@ -6,7 +6,7 @@
     <title>Login Toko Daging | MYGUDANG MEAT ERP</title>
     
     <!-- Brand Favicon & Logo -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='meatGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23E11D48'/%3E%3Cstop offset='50%25' stop-color='%23BE123C'/%3E%3Cstop offset='100%25' stop-color='%23881337'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='28' fill='%230F172A'/%3E%3Ccircle cx='64' cy='64' r='46' fill='none' stroke='url(%23meatGrad)' stroke-width='6' stroke-dasharray='6 4'/%3E%3Cpath d='M44 76C40 68 40 56 48 46C56 36 68 36 78 42C88 48 92 60 88 70C84 80 72 86 60 84C52 82 46 80 44 76Z' fill='url(%23meatGrad)'/%3E%3Ccircle cx='62' cy='58' r='10' fill='%23FFFFFF' opacity='0.85'/%3E%3Ccircle cx='62' cy='58' r='6' fill='%23E2E8F0'/%3E%3Cpath d='M74 46C70 42 62 42 58 45' stroke='%23FFE4E6' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='meatGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23E11D48'/%3E%3Cstop offset='50%25' stop-color='%23BE123C'/%3E%3Cstop offset='100%25' stop-color='%23881337'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='28' fill='%23FFFFFF' stroke='%23E2E8F0' stroke-width='4'/%3E%3Ccircle cx='64' cy='64' r='46' fill='none' stroke='url(%23meatGrad)' stroke-width='6' stroke-dasharray='6 4'/%3E%3Cpath d='M44 76C40 68 40 56 48 46C56 36 68 36 78 42C88 48 92 60 88 70C84 80 72 86 60 84C52 82 46 80 44 76Z' fill='url(%23meatGrad)'/%3E%3Ccircle cx='62' cy='58' r='10' fill='%23FFFFFF' opacity='0.9'/%3E%3Ccircle cx='62' cy='58' r='6' fill='%23E2E8F0'/%3E%3Cpath d='M74 46C70 42 62 42 58 45' stroke='%23FFE4E6' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
     
     <!-- GT Walsheim Pro Font Stylesheet -->
     <link href="{{ asset('assets/fonts/stylesheet.css') }}" rel="stylesheet" type="text/css" />
@@ -24,11 +24,14 @@
             --font-main: 'GT Walsheim Pro', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             --meat-crimson: #E11D48;
             --meat-crimson-dark: #BE123C;
-            --meat-deep-red: #881337;
-            --meat-amber: #F59E0B;
-            --cold-cyan: #06B6D4;
-            --obsidian-dark: #090B0E;
-            --slate-panel: #11151F;
+            --meat-crimson-light: #FFF1F2;
+            --meat-crimson-border: #FECDD3;
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --border-light: #E2E8F0;
+            --bg-page: #FFFFFF;
+            --bg-card: #FFFFFF;
         }
 
         * {
@@ -40,8 +43,8 @@
         html, body {
             height: 100%;
             font-family: var(--font-main) !important;
-            background-color: #0B0E14;
-            color: #F8FAFC;
+            background-color: #FFFFFF;
+            color: var(--text-body);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
@@ -50,24 +53,26 @@
             min-height: 100vh;
             display: flex;
             width: 100vw;
+            background: #FFFFFF;
         }
 
         /* ========================================================
-           LEFT HERO PANEL - BUTCHERY & COLD STORAGE THEME
+           LEFT HERO PANEL - BRIGHT & CLEAN WHITE THEME
         ======================================================== */
         .hero-panel {
             flex: 0 0 48%;
             background: 
-                linear-gradient(145deg, rgba(9, 11, 14, 0.94) 0%, rgba(136, 19, 55, 0.88) 55%, rgba(9, 11, 14, 0.97) 100%),
+                linear-gradient(135deg, #FFFFFF 0%, #FFF5F7 45%, #FEE2E2 100%),
                 url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+            background-blend-mode: overlay;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             padding: 4rem 4rem 3rem 4rem;
-            color: #ffffff;
+            color: var(--text-heading);
             overflow: hidden;
-            box-shadow: inset -15px 0 35px rgba(0, 0, 0, 0.45);
+            border-right: 1px solid #F1F5F9;
         }
 
         .hero-panel::before {
@@ -77,8 +82,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 15% 20%, rgba(225, 29, 72, 0.35) 0%, transparent 55%),
-                        radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.22) 0%, transparent 50%);
+            background: 
+                radial-gradient(circle at 10% 15%, rgba(225, 29, 72, 0.08) 0%, transparent 55%),
+                radial-gradient(circle at 90% 85%, rgba(244, 63, 94, 0.06) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -92,48 +98,43 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(225, 29, 72, 0.22);
-            border: 1px solid rgba(244, 63, 94, 0.45);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 0.45rem 1rem;
+            background: #FFF1F2;
+            border: 1px solid #FECDD3;
+            padding: 0.45rem 1.1rem;
             border-radius: 9999px;
-            font-size: 0.76rem;
+            font-size: 0.78rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
-            color: #FECDD3;
+            color: #BE123C;
             margin-bottom: 1.5rem;
-            box-shadow: 0 4px 16px rgba(225, 29, 72, 0.25);
+            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.08);
         }
 
         .hero-title {
             font-size: 2.65rem;
             font-weight: 800;
-            line-height: 1.15;
+            line-height: 1.16;
             letter-spacing: -0.025em;
             margin-bottom: 0.85rem;
-            color: #ffffff !important;
-            text-shadow: 0 3px 18px rgba(0, 0, 0, 0.4);
+            color: var(--text-heading) !important;
         }
 
         .hero-title span {
-            background: linear-gradient(135deg, #FDA4AF 0%, #FB7185 50%, #F43F5E 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--meat-crimson);
+            position: relative;
         }
 
         .hero-subtitle {
             font-size: 1.02rem;
-            font-weight: 400;
-            color: #E2E8F0 !important;
+            font-weight: 450;
+            color: var(--text-body) !important;
             line-height: 1.6;
             margin-bottom: 2.25rem;
             max-width: 520px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
         }
 
-        /* Feature Cards (Frosted Glass with Butchery Glow) */
+        /* 4 Clean Light Feature Cards */
         .glass-features-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -142,37 +143,37 @@
         }
 
         .glass-feature-card {
-            background: rgba(17, 21, 31, 0.55);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
             border-radius: 16px;
             padding: 0.95rem 1.25rem;
             display: flex;
             align-items: center;
             gap: 1.1rem;
-            transition: all 0.28s ease;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
         }
 
         .glass-feature-card:hover {
-            background: rgba(225, 29, 72, 0.22);
-            border-color: rgba(244, 63, 94, 0.45);
+            background: #FFFFFF;
+            border-color: #FECDD3;
             transform: translateX(6px);
-            box-shadow: 0 12px 28px rgba(225, 29, 72, 0.25);
+            box-shadow: 0 8px 24px rgba(225, 29, 72, 0.08);
         }
 
         .feature-icon-box {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, rgba(225, 29, 72, 0.35) 0%, rgba(136, 19, 55, 0.5) 100%);
-            border: 1px solid rgba(244, 63, 94, 0.35);
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+            background: #FFF1F2;
+            border: 1px solid #FECDD3;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            color: #FECDD3;
+            color: var(--meat-crimson);
             font-size: 1.25rem;
         }
 
@@ -182,20 +183,20 @@
         }
 
         .feature-title {
-            font-size: 0.94rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            color: #FFFFFF;
+            color: var(--text-heading);
             letter-spacing: -0.01em;
             margin-bottom: 0.15rem;
         }
 
         .feature-desc {
-            font-size: 0.81rem;
-            color: #CBD5E1;
+            font-size: 0.82rem;
+            color: var(--text-muted);
             line-height: 1.35;
         }
 
-        /* Live Status Badge Pills */
+        /* Status Strip */
         .status-strip {
             display: flex;
             flex-wrap: wrap;
@@ -204,9 +205,8 @@
         }
 
         .status-indicator-chip {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
             border-radius: 10px;
             padding: 0.4rem 0.85rem;
             display: flex;
@@ -214,7 +214,8 @@
             gap: 0.5rem;
             font-size: 0.78rem;
             font-weight: 600;
-            color: #E2E8F0;
+            color: var(--text-body);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
         }
 
         .status-dot-pulse {
@@ -222,7 +223,7 @@
             height: 8px;
             border-radius: 50%;
             background: #10B981;
-            box-shadow: 0 0 10px #10B981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
             animation: pulseGreen 2s infinite;
         }
 
@@ -236,42 +237,38 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(15, 23, 42, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
             border-radius: 14px;
             padding: 0.85rem 1.4rem;
             position: relative;
             z-index: 2;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
         }
 
         .live-clock-time {
             font-size: 1.3rem;
             font-weight: 800;
-            letter-spacing: 0.05em;
-            color: #FFFFFF !important;
+            letter-spacing: 0.04em;
+            color: var(--text-heading) !important;
             font-feature-settings: "tnum";
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
         }
 
         .live-clock-date {
             font-size: 0.84rem;
             font-weight: 500;
-            color: #94A3B8 !important;
+            color: var(--text-muted) !important;
         }
 
         /* ========================================================
-           RIGHT FORM PANEL - CRISP & ELEGANT
+           RIGHT FORM PANEL - PURE WHITE & LUXURY CARD
         ======================================================== */
         .form-panel {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #0E121A;
-            background-image: 
-                radial-gradient(at 90% 10%, rgba(225, 29, 72, 0.08) 0px, transparent 50%),
-                radial-gradient(at 10% 90%, rgba(6, 182, 212, 0.06) 0px, transparent 50%);
+            background: #FAFAFC;
             padding: 3rem 2.5rem;
             position: relative;
         }
@@ -279,11 +276,11 @@
         .login-card-elevated {
             width: 100%;
             max-width: 450px;
-            background: #141A24;
-            border: 1px solid rgba(255, 255, 255, 0.09);
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
             border-radius: 26px;
             padding: 3.25rem 2.65rem 2.5rem 2.65rem;
-            box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.02);
             position: relative;
             margin: auto;
         }
@@ -292,9 +289,9 @@
             width: 82px;
             height: 82px;
             border-radius: 24px;
-            background: linear-gradient(145deg, #1E2533 0%, #111622 100%);
-            border: 2px solid rgba(225, 29, 72, 0.45);
-            box-shadow: 0 12px 30px rgba(225, 29, 72, 0.3), inset 0 0 16px rgba(225, 29, 72, 0.15);
+            background: #FFFFFF;
+            border: 2px solid #FECDD3;
+            box-shadow: 0 10px 25px rgba(225, 29, 72, 0.12);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -305,14 +302,13 @@
 
         .floating-meat-badge i {
             font-size: 2.2rem;
-            color: #FB7185;
-            filter: drop-shadow(0 2px 8px rgba(225, 29, 72, 0.4));
+            color: var(--meat-crimson);
         }
 
         .form-header-title {
             font-size: 1.68rem;
             font-weight: 800;
-            color: #FFFFFF;
+            color: var(--text-heading);
             text-align: center;
             margin-bottom: 0.3rem;
             letter-spacing: -0.02em;
@@ -320,7 +316,7 @@
 
         .form-header-subtitle {
             font-size: 0.88rem;
-            color: #94A3B8;
+            color: var(--text-muted);
             text-align: center;
             margin-bottom: 2.1rem;
             line-height: 1.45;
@@ -329,7 +325,7 @@
         .custom-input-label {
             font-size: 0.85rem;
             font-weight: 700;
-            color: #E2E8F0;
+            color: var(--text-heading);
             margin-bottom: 0.45rem;
             display: block;
         }
@@ -344,7 +340,7 @@
             left: 1.15rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #64748B;
+            color: #94A3B8;
             font-size: 1.15rem;
             pointer-events: none;
             transition: color 0.2s;
@@ -355,7 +351,7 @@
             right: 1.15rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #64748B;
+            color: #94A3B8;
             font-size: 1.2rem;
             cursor: pointer;
             background: none;
@@ -368,18 +364,18 @@
         }
 
         .custom-input-group .input-icon-right:hover {
-            color: #F43F5E;
+            color: var(--meat-crimson);
         }
 
         .custom-input-field {
             width: 100%;
             height: 52px;
             padding: 0.65rem 1rem 0.65rem 3.1rem;
-            background: #1C2433;
-            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            background: #F8FAFC;
+            border: 1.5px solid #E2E8F0;
             border-radius: 14px;
             font-size: 0.94rem;
-            color: #F8FAFC;
+            color: var(--text-heading);
             font-weight: 500;
             font-family: var(--font-main);
             transition: all 0.25s ease;
@@ -387,20 +383,20 @@
 
         .custom-input-field:focus {
             outline: none;
-            border-color: #E11D48;
-            box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.18);
-            background: #212B3D;
+            border-color: var(--meat-crimson);
+            box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.12);
+            background: #FFFFFF;
         }
 
         .custom-input-field::placeholder {
-            color: #64748B;
+            color: #94A3B8;
             font-weight: 400;
         }
 
         .btn-submit-meat {
             width: 100%;
             height: 52px;
-            background: linear-gradient(135deg, #E11D48 0%, #BE123C 50%, #9F1239 100%);
+            background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
             border: none;
             border-radius: 14px;
             color: #FFFFFF;
@@ -411,15 +407,15 @@
             align-items: center;
             justify-content: center;
             gap: 0.65rem;
-            box-shadow: 0 12px 28px -5px rgba(225, 29, 72, 0.5);
+            box-shadow: 0 10px 24px -5px rgba(225, 29, 72, 0.4);
             transition: all 0.25s ease;
             cursor: pointer;
             margin-top: 1rem;
         }
 
         .btn-submit-meat:hover {
-            background: linear-gradient(135deg, #F43F5E 0%, #E11D48 50%, #BE123C 100%);
-            box-shadow: 0 16px 32px -5px rgba(225, 29, 72, 0.65);
+            background: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%);
+            box-shadow: 0 14px 28px -5px rgba(225, 29, 72, 0.55);
             transform: translateY(-2px);
             color: #FFFFFF;
         }
@@ -431,7 +427,7 @@
         .demo-accounts-wrapper {
             margin-top: 1.85rem;
             padding-top: 1.35rem;
-            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            border-top: 1px dashed #E2E8F0;
             text-align: center;
         }
 
@@ -441,24 +437,24 @@
             font-family: var(--font-main);
             padding: 0.45rem 0.75rem;
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.04);
-            color: #CBD5E1;
+            border: 1px solid #E2E8F0;
+            background: #F8FAFC;
+            color: var(--text-body);
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .demo-chip:hover {
-            background: rgba(225, 29, 72, 0.18);
-            color: #FECDD3;
-            border-color: rgba(225, 29, 72, 0.4);
+            background: #FFF1F2;
+            color: var(--meat-crimson);
+            border-color: #FECDD3;
             transform: translateY(-1px);
         }
 
         .footer-system-note {
             text-align: center;
             font-size: 0.74rem;
-            color: #64748B;
+            color: var(--text-muted);
             margin-top: 1.6rem;
         }
 
@@ -469,6 +465,8 @@
             .hero-panel {
                 flex: none;
                 padding: 3rem 2rem;
+                border-right: none;
+                border-bottom: 1px solid #F1F5F9;
             }
             .form-panel {
                 padding: 4rem 1.25rem 2.5rem 1.25rem;
@@ -483,7 +481,7 @@
 <body>
     <div class="login-wrapper">
         <!-- ========================================================
-             LEFT HERO PANEL - BUTCHERY & COLD STORAGE SHOWCASE
+             LEFT HERO PANEL - BRIGHT WHITE THEME WITH BUTCHERY ACCENTS
         ======================================================== -->
         <div class="hero-panel">
             <div class="hero-main-content">
@@ -499,7 +497,7 @@
                     Solusi terpadu pengadaan karkas, butchery deboning, dual-unit timbangan Koli & Kg (Catch Weight), gudang dingin chiller & kasir toko daging.
                 </p>
 
-                <!-- 4 Frosted Glass Butchery Features -->
+                <!-- 4 Clean Light Butchery Features -->
                 <div class="glass-features-grid">
                     <div class="glass-feature-card">
                         <div class="feature-icon-box">
@@ -553,7 +551,7 @@
                         <span>Dual-Unit Balance: Active</span>
                     </div>
                     <div class="status-indicator-chip">
-                        <i class="bi bi-database-check text-info"></i>
+                        <i class="bi bi-database-check text-primary"></i>
                         <span>Auto-Journal GL: Synced</span>
                     </div>
                 </div>
@@ -566,7 +564,7 @@
                     <div class="live-clock-date" id="liveClockDate">Memuat tanggal...</div>
                 </div>
                 <div class="d-flex align-items-center gap-2">
-                    <span class="badge bg-danger bg-opacity-25 text-danger px-3 py-2 rounded-pill fw-bold fs-8">
+                    <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-bold fs-8 border border-danger border-opacity-25">
                         <i class="bi bi-dot"></i> LIVE CLOUD
                     </span>
                 </div>
@@ -574,7 +572,7 @@
         </div>
 
         <!-- ========================================================
-             RIGHT FORM PANEL - LOGIN CARD
+             RIGHT FORM PANEL - PURE WHITE FORM
         ======================================================== -->
         <div class="form-panel">
             <div class="login-card-elevated">
@@ -584,7 +582,7 @@
                 </div>
 
                 <h2 class="form-header-title">Masuk ke Sistem</h2>
-                <p class="form-header-subtitle">Silakan autentikasi akun Toko Daging & ERP Anda</p>
+                <p class="form-header-subtitle">Silakan masuk ke akun Toko Daging & ERP Anda</p>
 
                 @if($errors->any())
                     <div class="alert alert-dismissible bg-danger bg-opacity-10 d-flex align-items-center p-3 mb-4 rounded-3 border border-danger border-opacity-25">
@@ -617,7 +615,7 @@
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="form-check">
-                            <input class="form-check-input bg-dark border-secondary" type="checkbox" name="remember" id="rememberMe" checked>
+                            <input class="form-check-input" type="checkbox" name="remember" id="rememberMe" checked>
                             <label class="form-check-label fs-8 text-muted fw-semibold" for="rememberMe">
                                 Ingat sesi login saya
                             </label>
